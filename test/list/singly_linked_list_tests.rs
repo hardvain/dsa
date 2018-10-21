@@ -57,3 +57,10 @@ fn add_all_works() {
     assert_eq!(sll.length(), 5);
     assert_eq!(sll.to_string(), "41235");
 }
+
+#[test]
+fn add_first_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    sll.add_first(2);
+    assert_eq!(sll.length(), 1);
+}

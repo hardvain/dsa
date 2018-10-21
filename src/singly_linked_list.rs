@@ -54,6 +54,9 @@ impl<T: Debug> SinglyLinkedList<T> {
     pub fn add(&mut self, t: T) -> &mut Self {
         self.add_at(t, self.length())
     }
+    pub fn add_first(&mut self, t: T) -> &mut Self {
+        self.add_at(t, 0)
+    }
 
     pub fn add_all(&mut self, items: Vec<T>) -> &mut Self {
         for item in items {
