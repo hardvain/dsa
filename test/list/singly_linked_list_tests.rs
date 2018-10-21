@@ -20,7 +20,7 @@ fn add_at_works() {
     sll.add(2);
     sll.add(3);
     sll.add(5);
-    sll.add_at(4, 0);
+    sll.add_at(4, 3);
     println!("{:?}", sll);
     assert_eq!(sll.length(), 5);
 }

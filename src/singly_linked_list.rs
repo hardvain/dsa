@@ -33,7 +33,7 @@ impl<T: Debug> SinglyLinkedList<T> {
         let mut current_node = &self.head;
         let mut counter = index;
         while counter != 0 && current_node.is_some() {
-            let current_node_value = current_node.borrow_unwrap();
+            let current_node_value = current_node.as_ref().unwrap();
             current_node = &current_node_value.next;
             counter = counter - 1;
         }
@@ -47,7 +47,7 @@ impl<T: Debug> SinglyLinkedList<T> {
         let mut current_node = &mut self.head;
         let mut counter = index;
         while counter != 0 && current_node.is_some() {
-            let current_node_value = current_node.borrow_unwrap_mut();
+            let current_node_value = current_node.as_mut().unwrap();
             current_node = &mut current_node_value.next;
             counter = counter - 1;
         }
@@ -62,29 +62,18 @@ impl<T: Debug> SinglyLinkedList<T> {
      * Get node at index n-1
      */
     pub fn add_at(&mut self, t: T, index: i32) -> &mut Self {
-        let mut counter = index;
-        let mut current_node = &mut self.head;
-        while counter != 0 && current_node.is_some() {
-            match current_node {
-                Some(node) => {
-                    current_node = &mut node.next;
-                    counter = counter - 1;
-                }
-                None => {}
-            }
-        }
-        match current_node {
+        let optional_node = self.node_at_mut(index);
+        match optional_node {
             Some(node) => {
-                let current_next = node.next.take();
+                let current_next = &mut node.next;
                 let new_node = Node {
                     value: t,
-                    next: current_next,
+                    next: current_next.take(),
                 };
-                node.next = Some(Box::new(new_node));
+                node.next = Some(Box::new(new_node))
             }
             None => {}
-        };
-
+        }
         self
     }
 
@@ -115,6 +104,20 @@ impl<T: Debug> SinglyLinkedList<T> {
         }
         self
     }
+
+    fn node_at_mut(&mut self, index: i32) -> Option<&mut Node<T>> {
+        let mut current_node = &mut self.head;
+        let mut counter = index;
+        while counter != 0 && current_node.is_some() {
+            let current_node_value = current_node.as_mut().unwrap();
+            current_node = &mut current_node_value.next;
+            counter = counter - 1;
+        }
+        match current_node {
+            Some(node) => Some(&mut *node),
+            None => None,
+        }
+    }
 }
 
 impl<T: ToString> ToString for SinglyLinkedList<T> {
@@ -131,24 +134,5 @@ impl<T: ToString> ToString for SinglyLinkedList<T> {
             }
         }
         vec.into_iter().map(|i| i.to_string()).collect::<String>()
-    }
-}
-
-trait OptionReferenceBorrow<T> {
-    fn borrow_unwrap(&self) -> &T;
-    fn borrow_unwrap_mut(&mut self) -> &mut T;
-}
-impl<T> OptionReferenceBorrow<T> for Option<T> {
-    fn borrow_unwrap(&self) -> &T {
-        match self {
-            Some(v) => v,
-            None => panic!("Unwrapping none"),
-        }
-    }
-    fn borrow_unwrap_mut(&mut self) -> &mut T {
-        match self {
-            Some(v) => v,
-            None => panic!("Unwrapping none"),
-        }
     }
 }
