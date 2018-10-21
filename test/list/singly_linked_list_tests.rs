@@ -137,3 +137,18 @@ fn last_index_of_works() {
     sll.add_all(items);
     assert_eq!(sll.last_index_of(2), Some(4));
 }
+
+#[test]
+fn replace_at_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    sll.replace_at(0, 1);
+    assert_eq!(sll.length(), 0);
+    sll.add(2);
+    sll.replace_at(0, 1);
+    assert_eq!(sll.length(), 1);
+    let items = vec![1, 2, 3, 5, 2];
+    sll.add_all(items);
+    sll.replace_at(3, 1);
+    assert_eq!(sll.length(), 6);
+    assert_eq!(sll.to_string(), "112152");
+}

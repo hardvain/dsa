@@ -51,6 +51,21 @@ impl<T: Debug> SinglyLinkedList<T> {
         self
     }
 
+    pub fn replace_at(&mut self, index: i32, t: T) -> &mut Self {
+        if index == 0 {
+            self.head.as_mut().map(|node| {
+                node.value = t;
+            });
+        } else {
+            let optional_node = self.node_at_mut(index);
+            optional_node.map(|node| {
+                node.value = t;
+            });
+        }
+
+        self
+    }
+
     pub fn clear(&mut self) -> &mut Self {
         self.head = None;
         self
