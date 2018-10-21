@@ -1,0 +1,18 @@
+[package]
+name = "dsa"
+version = "0.1.0"
+authors = ["Aravindh Sridharan <mail@aravindh.io>"]
+edition = "2018"
+
+
+[lib]
+name = "dsa"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dsa"
+path = "src/main.rs"
+
+[[test]]
+name = "test"
+path = "test/mod.rs"
