@@ -41,33 +41,18 @@ impl<T: Debug> SinglyLinkedList<T> {
         if index == 0 {
             new_node.next = self.head.take();
             self.head = Some(Box::new(new_node));
-            self
-        } else {
-            if optional_node.is_none() {
-                self
-            } else {
-                optional_node.map(|node| {
-                    let current_next = &mut node.next;
-                    new_node.next = current_next.take();
-                    node.next = Some(Box::new(new_node));
-                });
-                self
-            }
+            return self;
         }
+        optional_node.map(|node| {
+            let current_next = &mut node.next;
+            new_node.next = current_next.take();
+            node.next = Some(Box::new(new_node));
+        });
+        self
     }
 
     pub fn add(&mut self, t: T) -> &mut Self {
         self.add_at(t, self.length())
-    }
-
-    pub fn iter(&self) -> SinglyLinkedListIterator<T> {
-        let next = self.head.as_ref().map(|n| &**n);
-        SinglyLinkedListIterator { next: next }
-    }
-
-    pub fn iter_mut(&mut self) -> SinglyLinkedListIteratorMut<T> {
-        let next = self.head.as_mut().map(|node| &mut **node);
-        SinglyLinkedListIteratorMut { next: next }
     }
 
     fn node_at_mut(&mut self, index: i32) -> Option<&mut Node<T>> {
@@ -119,11 +104,21 @@ impl<T: ToString> ToString for SinglyLinkedList<T> {
 pub struct SinglyLinkedListIterator<'a, T> {
     next: Option<&'a Node<T>>,
 }
-
+impl<T> SinglyLinkedList<T> {
+    pub fn iter(&self) -> SinglyLinkedListIterator<T> {
+        let next = self.head.as_ref().map(|n| &**n);
+        SinglyLinkedListIterator { next: next }
+    }
+}
 pub struct SinglyLinkedListIteratorMut<'a, T> {
     next: Option<&'a mut Node<T>>,
 }
-
+impl<T> SinglyLinkedList<T> {
+    pub fn iter_mut(&mut self) -> SinglyLinkedListIteratorMut<T> {
+        let next = self.head.as_mut().map(|node| &mut **node);
+        SinglyLinkedListIteratorMut { next: next }
+    }
+}
 impl<'a, T> Iterator for SinglyLinkedListIterator<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
