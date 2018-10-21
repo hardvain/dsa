@@ -51,6 +51,11 @@ impl<T: Debug> SinglyLinkedList<T> {
         self
     }
 
+    pub fn clear(&mut self) -> &mut Self {
+        self.head = None;
+        self
+    }
+
     pub fn add(&mut self, t: T) -> &mut Self {
         self.add_at(t, self.length())
     }
@@ -95,6 +100,18 @@ impl<T: Debug> SinglyLinkedList<T> {
             Some(node) => Some(node),
             None => None,
         }
+    }
+}
+
+impl<T: std::cmp::Eq> SinglyLinkedList<T> {
+    pub fn contains(&self, t: T) -> bool {
+        let mut contains = false;
+        for item in self.iter() {
+            if item == &t {
+                contains = true;
+            }
+        }
+        contains
     }
 }
 

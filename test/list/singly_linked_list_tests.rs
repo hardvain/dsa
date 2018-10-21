@@ -81,3 +81,23 @@ fn add_last_works() {
     assert_eq!(sll.length(), 5);
     assert_eq!(sll.to_string(), "91235");
 }
+
+#[test]
+fn clear_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.length(), 4);
+    sll.clear();
+    assert_eq!(sll.length(), 0);
+    assert_eq!(sll.to_string(), "");
+}
+
+#[test]
+fn contains_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.contains(2), true);
+    assert_eq!(sll.contains(20), false);
+}
