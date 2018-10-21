@@ -121,6 +121,33 @@ impl<T: std::cmp::Eq> SinglyLinkedList<T> {
         }
         contains
     }
+
+    pub fn index_of(&self, t: T) -> Option<i32> {
+        let mut index = 0;
+        for item in self.iter() {
+            if item == &t {
+                return Some(index);
+            }
+            index = index + 1;
+        }
+        None
+    }
+
+    pub fn last_index_of(&self, t: T) -> Option<i32> {
+        let mut index = 0;
+        let mut last_index = 0;
+        for item in self.iter() {
+            if item == &t {
+                last_index = index;
+            }
+            index = index + 1;
+        }
+        if last_index == 0 {
+            None
+        } else {
+            Some(last_index)
+        }
+    }
 }
 
 impl<T: ToString> ToString for SinglyLinkedList<T> {

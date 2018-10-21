@@ -119,3 +119,21 @@ fn get_last_works() {
     sll.add_all(items);
     assert_eq!(sll.get_last(), Some(&5));
 }
+
+#[test]
+fn index_of_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    assert_eq!(sll.index_of(10), None);
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.index_of(2), Some(1));
+}
+
+#[test]
+fn last_index_of_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    assert_eq!(sll.last_index_of(10), None);
+    let items = vec![1, 2, 3, 5, 2];
+    sll.add_all(items);
+    assert_eq!(sll.last_index_of(2), Some(4));
+}
