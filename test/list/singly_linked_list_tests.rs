@@ -10,6 +10,10 @@ fn returns_correct_length() {
 
     sll.add(2);
     assert_eq!(sll.length(), 2);
+
+    for elem in sll.iter() {
+        println!("{:?}", elem)
+    }
 }
 
 #[test]
