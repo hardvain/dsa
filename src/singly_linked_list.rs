@@ -34,7 +34,7 @@ impl<T: Debug> SinglyLinkedList<T> {
             value: t,
             next: None,
         };
-        let mut result = Some(Box::new(new_node));
+        let result = Some(Box::new(new_node));
         if self.head.is_none() {
             self.head = result;
             self
@@ -42,11 +42,18 @@ impl<T: Debug> SinglyLinkedList<T> {
             let mut current_node = &mut self.head;
             while current_node.is_some() {
                 match current_node {
-                    Some(node) => current_node = &mut node.next,
+                    Some(node) => {
+                        if node.next.is_some() {
+                            current_node = &mut node.next;
+                            continue;
+                        } else {
+                            node.next = result;
+                            break;
+                        }
+                    }
                     None => {}
                 }
             }
-            current_node = &mut result;
             self
         }
     }
