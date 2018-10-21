@@ -11,8 +11,12 @@ pub struct SinglyLinkedList<T> {
 }
 
 impl<T: Debug> SinglyLinkedList<T> {
-    pub fn new() -> Self {
-        SinglyLinkedList { head: None }
+    pub fn new(items: Vec<T>) -> Self {
+        let mut sll = SinglyLinkedList { head: None };
+        for item in items {
+            sll.add(item);
+        }
+        sll
     }
     pub fn length(&self) -> i32 {
         let mut length = 0;
