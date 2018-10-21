@@ -61,6 +61,23 @@ fn add_all_works() {
 #[test]
 fn add_first_works() {
     let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
-    sll.add_first(2);
+    sll.add_first(9);
     assert_eq!(sll.length(), 1);
+    assert_eq!(sll.to_string(), "9");
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.length(), 5);
+    assert_eq!(sll.to_string(), "91235");
+}
+
+#[test]
+fn add_last_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    sll.add_last(9);
+    assert_eq!(sll.length(), 1);
+    assert_eq!(sll.to_string(), "9");
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.length(), 5);
+    assert_eq!(sll.to_string(), "91235");
 }

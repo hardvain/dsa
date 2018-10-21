@@ -58,6 +58,10 @@ impl<T: Debug> SinglyLinkedList<T> {
         self.add_at(t, 0)
     }
 
+    pub fn add_last(&mut self, t: T) -> &mut Self {
+        self.add_at(t, self.length())
+    }
+
     pub fn add_all(&mut self, items: Vec<T>) -> &mut Self {
         for item in items {
             self.add(item);
