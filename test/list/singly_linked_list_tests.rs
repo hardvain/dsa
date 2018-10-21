@@ -101,3 +101,21 @@ fn contains_works() {
     assert_eq!(sll.contains(2), true);
     assert_eq!(sll.contains(20), false);
 }
+
+#[test]
+fn get_first_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    assert_eq!(sll.get_first(), None);
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.get_first(), Some(&1));
+}
+
+#[test]
+fn get_last_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    assert_eq!(sll.get_last(), None);
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    assert_eq!(sll.get_last(), Some(&5));
+}

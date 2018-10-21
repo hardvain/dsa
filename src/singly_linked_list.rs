@@ -63,6 +63,14 @@ impl<T: Debug> SinglyLinkedList<T> {
         self.add_at(t, 0)
     }
 
+    pub fn get_first(&self) -> Option<&T> {
+        self.element_at(0)
+    }
+
+    pub fn get_last(&self) -> Option<&T> {
+        self.element_at(self.length() - 1)
+    }
+
     pub fn add_last(&mut self, t: T) -> &mut Self {
         self.add_at(t, self.length())
     }
