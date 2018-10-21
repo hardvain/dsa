@@ -2,7 +2,7 @@ use dsa::singly_linked_list::*;
 
 #[test]
 fn length_works() {
-    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new(vec![]);
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     assert_eq!(sll.length(), 0);
 
     sll.add(1);
@@ -14,7 +14,7 @@ fn length_works() {
 
 #[test]
 fn element_at_works() {
-    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new(vec![]);
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     assert_eq!(sll.element_at(0), None);
     sll.add(10);
     sll.add(21);
@@ -28,7 +28,7 @@ fn element_at_works() {
 
 #[test]
 fn get_element_at_mut_works() {
-    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new(vec![]);
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     assert_eq!(sll.element_at_mut(0), None);
     sll.add(10);
     sll.add(21);
@@ -42,7 +42,7 @@ fn get_element_at_mut_works() {
 
 #[test]
 fn add_and_add_at_works() {
-    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new(vec![1, 2, 3, 5]);
+    let mut sll: SinglyLinkedList<i32> = vec![1, 2, 3, 5].into();
     sll.add_at(4, 0);
     assert_eq!(sll.length(), 5);
     assert_eq!(sll.to_string(), "41235");

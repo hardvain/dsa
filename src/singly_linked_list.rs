@@ -11,12 +11,8 @@ pub struct SinglyLinkedList<T> {
 }
 
 impl<T: Debug> SinglyLinkedList<T> {
-    pub fn new(items: Vec<T>) -> Self {
-        let mut sll = SinglyLinkedList { head: None };
-        for item in items {
-            sll.add(item);
-        }
-        sll
+    pub fn new() -> Self {
+        SinglyLinkedList { head: None }
     }
     pub fn length(&self) -> i32 {
         let mut length = 0;
@@ -140,5 +136,16 @@ impl<'a, T> Iterator for SinglyLinkedListIteratorMut<'a, T> {
             self.next = node.next.as_mut().map(|node| &mut **node);
             &mut node.value
         })
+    }
+}
+
+// Why should Debug constraint be placed here?
+impl<T: Debug> From<Vec<T>> for SinglyLinkedList<T> {
+    fn from(items: Vec<T>) -> Self {
+        let mut sll: SinglyLinkedList<T> = SinglyLinkedList { head: None };
+        for item in items {
+            sll.add(item);
+        }
+        sll
     }
 }
