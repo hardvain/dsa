@@ -11,7 +11,7 @@ fn returns_correct_length() {
     sll.add(2);
     assert_eq!(sll.length(), 2);
 
-    for elem in sll.iter() {
+    for elem in sll.iter_mut() {
         println!("{:?}", elem)
     }
 }

@@ -82,6 +82,11 @@ impl<T: Debug> SinglyLinkedList<T> {
         SinglyLinkedListIterator { next: next }
     }
 
+    pub fn iter_mut(&mut self) -> SinglyLinkedListIteratorMut<T> {
+        let next = self.head.as_mut().map(|node| &mut **node);
+        SinglyLinkedListIteratorMut { next: next }
+    }
+
     fn node_at_mut(&mut self, index: i32) -> Option<&mut Node<T>> {
         let mut current_node = &mut self.head;
         let mut counter = index;
@@ -132,12 +137,26 @@ pub struct SinglyLinkedListIterator<'a, T> {
     next: Option<&'a Node<T>>,
 }
 
+pub struct SinglyLinkedListIteratorMut<'a, T> {
+    next: Option<&'a mut Node<T>>,
+}
+
 impl<'a, T> Iterator for SinglyLinkedListIterator<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         self.next.map(|node| {
             self.next = node.next.as_ref().map(|node| &**node);
             &node.value
+        })
+    }
+}
+
+impl<'a, T> Iterator for SinglyLinkedListIteratorMut<'a, T> {
+    type Item = &'a mut T;
+    fn next(&mut self) -> Option<Self::Item> {
+        self.next.take().map(|node| {
+            self.next = node.next.as_mut().map(|node| &mut **node);
+            &mut node.value
         })
     }
 }
