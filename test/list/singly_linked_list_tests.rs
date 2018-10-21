@@ -41,7 +41,7 @@ fn get_element_at_mut_works() {
 }
 
 #[test]
-fn add_at_works() {
+fn add_and_add_at_works() {
     let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     sll.add(1);
     sll.add(2);

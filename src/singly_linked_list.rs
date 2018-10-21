@@ -57,32 +57,7 @@ impl<T: Debug> SinglyLinkedList<T> {
     }
 
     pub fn add(&mut self, t: T) -> &mut Self {
-        let new_node = Node {
-            value: t,
-            next: None,
-        };
-        let result = Some(Box::new(new_node));
-
-        if self.head.is_none() {
-            self.head = result;
-            return self;
-        }
-        let mut current_node = &mut self.head;
-        while current_node.is_some() {
-            match current_node {
-                Some(node) => {
-                    if node.next.is_some() {
-                        current_node = &mut node.next;
-                        continue;
-                    } else {
-                        node.next = result;
-                        break;
-                    }
-                }
-                None => {}
-            }
-        }
-        self
+        self.add_at(t, self.length())
     }
 
     pub fn iter(&self) -> SinglyLinkedListIterator<T> {
