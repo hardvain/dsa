@@ -29,6 +29,40 @@ impl<T: Debug> SinglyLinkedList<T> {
         length
     }
 
+    pub fn add_at(&mut self, t: T, index: i32) -> &mut Self {
+        if index > self.length() {
+            return self;
+        } else {
+            let mut counter = index;
+            let mut current_node = &mut self.head;
+            while counter != 0 {
+                if current_node.is_some() {
+                    match current_node {
+                        Some(node) => {
+                            current_node = &mut node.next;
+                            counter = counter - 1;
+                        }
+                        None => {}
+                    }
+                }
+            }
+
+            match current_node {
+                Some(node) => {
+                    let current_next = node.next.take();
+                    let new_node = Node {
+                        value: t,
+                        next: current_next,
+                    };
+                    node.next = Some(Box::new(new_node));
+                }
+                None => {}
+            };
+
+            self
+        }
+    }
+
     pub fn add(&mut self, t: T) -> &mut Self {
         let new_node = Node {
             value: t,
@@ -37,25 +71,24 @@ impl<T: Debug> SinglyLinkedList<T> {
         let result = Some(Box::new(new_node));
         if self.head.is_none() {
             self.head = result;
-            self
-        } else {
-            let mut current_node = &mut self.head;
-            while current_node.is_some() {
-                match current_node {
-                    Some(node) => {
-                        if node.next.is_some() {
-                            current_node = &mut node.next;
-                            continue;
-                        } else {
-                            node.next = result;
-                            break;
-                        }
-                    }
-                    None => {}
-                }
-            }
-            self
+            return self;
         }
+        let mut current_node = &mut self.head;
+        while current_node.is_some() {
+            match current_node {
+                Some(node) => {
+                    if node.next.is_some() {
+                        current_node = &mut node.next;
+                        continue;
+                    } else {
+                        node.next = result;
+                        break;
+                    }
+                }
+                None => {}
+            }
+        }
+        self
     }
 }
 
