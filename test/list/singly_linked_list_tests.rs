@@ -1,7 +1,7 @@
 use dsa::singly_linked_list::*;
 
 #[test]
-fn returns_correct_length() {
+fn length_works() {
     let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     assert_eq!(sll.length(), 0);
 
@@ -10,27 +10,10 @@ fn returns_correct_length() {
 
     sll.add(2);
     assert_eq!(sll.length(), 2);
-
-    for elem in sll.iter_mut() {
-        println!("{:?}", elem)
-    }
 }
 
 #[test]
-fn add_at_works() {
-    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
-
-    sll.add(1);
-    sll.add(2);
-    sll.add(3);
-    sll.add(5);
-    sll.add_at(4, 0);
-    assert_eq!(sll.length(), 5);
-    assert_eq!(sll.to_string(), "41235");
-}
-
-#[test]
-fn get_element_at_works() {
+fn element_at_works() {
     let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
     assert_eq!(sll.element_at(0), None);
     sll.add(10);
@@ -55,4 +38,16 @@ fn get_element_at_mut_works() {
     assert_eq!(sll.element_at_mut(1), Some(&mut 21));
     assert_eq!(sll.element_at_mut(2), Some(&mut 33));
     assert_eq!(sll.element_at_mut(3), Some(&mut 50));
+}
+
+#[test]
+fn add_at_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    sll.add(1);
+    sll.add(2);
+    sll.add(3);
+    sll.add(5);
+    sll.add_at(4, 0);
+    assert_eq!(sll.length(), 5);
+    assert_eq!(sll.to_string(), "41235");
 }

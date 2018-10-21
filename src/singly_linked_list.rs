@@ -16,11 +16,8 @@ impl<T: Debug> SinglyLinkedList<T> {
     }
     pub fn length(&self) -> i32 {
         let mut length = 0;
-        let mut current_node = &self.head;
-        while current_node.is_some() {
-            let node = current_node.as_ref().unwrap();
+        for _ in self.iter() {
             length = length + 1;
-            current_node = &node.next;
         }
         length
     }
@@ -36,16 +33,27 @@ impl<T: Debug> SinglyLinkedList<T> {
     }
 
     pub fn add_at(&mut self, t: T, index: i32) -> &mut Self {
-        let optional_node = self.node_at_mut(index);
-        optional_node.map(|node| {
-            let current_next = &mut node.next;
-            let new_node = Node {
-                value: t,
-                next: current_next.take(),
-            };
-            node.next = Some(Box::new(new_node));
-        });
-        self
+        let optional_node = self.node_at_mut(index - 1);
+        let mut new_node = Node {
+            value: t,
+            next: None,
+        };
+        if index == 0 {
+            new_node.next = self.head.take();
+            self.head = Some(Box::new(new_node));
+            self
+        } else {
+            if optional_node.is_none() {
+                self
+            } else {
+                optional_node.map(|node| {
+                    let current_next = &mut node.next;
+                    new_node.next = current_next.take();
+                    node.next = Some(Box::new(new_node));
+                });
+                self
+            }
+        }
     }
 
     pub fn add(&mut self, t: T) -> &mut Self {
