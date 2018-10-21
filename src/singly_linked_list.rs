@@ -55,6 +55,13 @@ impl<T: Debug> SinglyLinkedList<T> {
         self.add_at(t, self.length())
     }
 
+    pub fn add_all(&mut self, items: Vec<T>) -> &mut Self {
+        for item in items {
+            self.add(item);
+        }
+        self
+    }
+
     fn node_at_mut(&mut self, index: i32) -> Option<&mut Node<T>> {
         let mut current_node = &mut self.head;
         let mut counter = index;

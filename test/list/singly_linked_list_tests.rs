@@ -47,3 +47,13 @@ fn add_and_add_at_works() {
     assert_eq!(sll.length(), 5);
     assert_eq!(sll.to_string(), "41235");
 }
+
+#[test]
+fn add_all_works() {
+    let mut sll: SinglyLinkedList<i32> = SinglyLinkedList::new();
+    let items = vec![1, 2, 3, 5];
+    sll.add_all(items);
+    sll.add_at(4, 0);
+    assert_eq!(sll.length(), 5);
+    assert_eq!(sll.to_string(), "41235");
+}
