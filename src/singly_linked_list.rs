@@ -18,49 +18,23 @@ impl<T: Debug> SinglyLinkedList<T> {
         let mut length = 0;
         let mut current_node = &self.head;
         while current_node.is_some() {
-            match current_node {
-                Some(node) => {
-                    length = length + 1;
-                    current_node = &(*node).next;
-                }
-                None => {}
-            }
+            let node = current_node.as_ref().unwrap();
+            length = length + 1;
+            current_node = &node.next;
         }
         length
     }
 
     pub fn element_at(&self, index: i32) -> Option<&T> {
-        let mut current_node = &self.head;
-        let mut counter = index;
-        while counter != 0 && current_node.is_some() {
-            let current_node_value = current_node.as_ref().unwrap();
-            current_node = &current_node_value.next;
-            counter = counter - 1;
-        }
-        match current_node {
-            Some(node) => Some(&node.value),
-            None => None,
-        }
+        let opt_node = self.node_at(index);
+        opt_node.map(|n| &n.value)
     }
 
     pub fn element_at_mut(&mut self, index: i32) -> Option<&mut T> {
-        let mut current_node = &mut self.head;
-        let mut counter = index;
-        while counter != 0 && current_node.is_some() {
-            let current_node_value = current_node.as_mut().unwrap();
-            current_node = &mut current_node_value.next;
-            counter = counter - 1;
-        }
-        match current_node {
-            Some(node) => Some(&mut node.value),
-            None => None,
-        }
+        let mut_opt_node = self.node_at_mut(index);
+        mut_opt_node.map(|n| &mut n.value)
     }
-    /**
-     * if length of list < index, return error
-     * else
-     * Get node at index n-1
-     */
+
     pub fn add_at(&mut self, t: T, index: i32) -> &mut Self {
         let optional_node = self.node_at_mut(index);
         match optional_node {
@@ -115,6 +89,20 @@ impl<T: Debug> SinglyLinkedList<T> {
         }
         match current_node {
             Some(node) => Some(&mut *node),
+            None => None,
+        }
+    }
+
+    fn node_at(&self, index: i32) -> Option<&Node<T>> {
+        let mut current_node = &self.head;
+        let mut counter = index;
+        while counter != 0 && current_node.is_some() {
+            let current_node_value = current_node.as_ref().unwrap();
+            current_node = &current_node_value.next;
+            counter = counter - 1;
+        }
+        match current_node {
+            Some(node) => Some(node),
             None => None,
         }
     }

@@ -20,9 +20,9 @@ fn add_at_works() {
     sll.add(2);
     sll.add(3);
     sll.add(5);
-    sll.add_at(4, 3);
-    println!("{:?}", sll);
+    sll.add_at(4, 0);
     assert_eq!(sll.length(), 5);
+    assert_eq!(sll.to_string(), "41235");
 }
 
 #[test]
